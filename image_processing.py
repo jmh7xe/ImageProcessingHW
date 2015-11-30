@@ -52,11 +52,41 @@ def intensify(pixel,quantity):
 # invert: modifies image pixel array of image_surf in place
 # replace each pixel with its photographic "negative"
 
+def invert(image_surf):
+
+    # get pixel dimensions of image
+    rows = image_surf.get_size()[0]
+    cols = image_surf.get_size()[1]
+    
+    # get reference to and lock pixel array
+    pixels3d = pg.surfarray.pixels3d(image_surf)
+
+    # update pixels in place (side effect!)
+    for x in range(rows):
+        for y in range(cols):
+            pixels3d[x,y] = inverse(pixels3d[x,y])
+
+
+# bw: modifies image pixel array of image_surf in place
+# replaces each pixel with a corresponding gray-scale pixel
+def bw(image_surf):
+
+    # get pixel dimensions of image
+    rows = image_surf.get_size()[0]
+    cols = image_surf.get_size()[1]
+    
+    # get reference to and lock pixel array
+    pixels3d = pg.surfarray.pixels3d(image_surf)
+
+    # update pixels in place (side effect!)
+    for x in range(rows):
+        for y in range(cols):
+            pixels3d[x,y] = grayPixel(pixels3d[x,y])
 
 def intensify(pixel, quantity):
-    r=numpy.int32(pixel[0])+quantity
-    g=numpy.int32(pixel[1])+quantity
-    b=numpy.int32(pixel[2])+quantity
+    r = numpy.int32(pixel[0])+quantity
+    g = numpy.int32(pixel[0])+quantity
+    b = numpy.int32(pixel[0])+quantity
     if quantity < 0:
         if r < 0:
             r = 0
@@ -74,19 +104,6 @@ def intensify(pixel, quantity):
     return ((numpy.int8(r), numpy.int8(g), numpy.int8(b)))
 
 
-def invert(image_surf):
-
-    # get pixel dimensions of image
-    rows = image_surf.get_size()[0]
-    cols = image_surf.get_size()[1]
-    
-    # get reference to and lock pixel array
-    pixels3d = pg.surfarray.pixels3d(image_surf)
-
-    # update pixels in place (side effect!)
-    for x in range(rows):
-        for y in range(cols):
-            pixels3d[x,y] = inverse(pixels3d[x,y])
 
 def darken(image_surf):
 
@@ -118,19 +135,4 @@ def brighten(image_surf):
             pixels3d[x,y] = intensify(pixels3d[x,y], 10)
 
 
-# bw: modifies image pixel array of image_surf in place
-# replaces each pixel with a corresponding gray-scale pixel
-def bw(image_surf):
-
-    # get pixel dimensions of image
-    rows = image_surf.get_size()[0]
-    cols = image_surf.get_size()[1]
-    
-    # get reference to and lock pixel array
-    pixels3d = pg.surfarray.pixels3d(image_surf)
-
-    # update pixels in place (side effect!)
-    for x in range(rows):
-        for y in range(cols):
-            pixels3d[x,y] = grayPixel(pixels3d[x,y])
     

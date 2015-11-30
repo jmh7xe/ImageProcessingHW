@@ -67,7 +67,7 @@ def badChoice(state):
     print("Bad choice, try again")
     return state
 
-def greyscale(state):
+def grayscale(state):
     (ip.bw)(state['processed'])
     state['needsDisplayUpdate'] = True
     return state
@@ -99,7 +99,7 @@ menu = {
     114 : reset,     # r
     108 : load,      # l
     115 : save,      # s
-    103 : greyscale, # g
+    103 : grayscale, # g
     98  : brighten,  # b
     100 : darken,    # d
     }
